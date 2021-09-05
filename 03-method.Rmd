@@ -1,3 +1,370 @@
 # Risk Prediction for Primary Ovarian Insufficiency in Childhood Cancer Survivors
 
+**Abstract**
+
+Background
+
+Primary ovarian insufficiency is one concerning adverse effect of cancer treatments for female childhood cancer survivors. Currently, treatment-related risk factors have been established. However, the incremental value of genetic information in the form of a polygenic risk score in risk prediction for POI is unknown. Integrating PRS or PRS-treatment interaction into the existing clinical prediction model may further improve the prediction. 
+
+Methods
+
+1985 participants in the Childhood Cancer Survivor Study (CCSS) original cohort was used in this study. Time-specific logistic regression models were built. A clinical risk score computed from a previous study was adjusted using a calibration slope. The adjusted clinical risk score was always included in the models as an offset term to account for the clinical risk. The added value of the general population based and childhood cancer survivor population-based PRSs were examined as a main effect in the time-specific logistic regression. The PRS-treatment interactions were also evaluated.  A 5-fold cross-validation frame was applied for internal validation. The area under the ROC curve (AUC), average precision (AP), scaled Brier score (SBrS), and the calibration curve was computed on the test sets to assess the model performance.
+
+Results
+
+The PRS main effect models performed similarly on the test sets. The AUC values were between  0.775 to 0.780. The AP values ranged from 0.530 to 0.532, which is larger than the event rate of 0.114, indicating adequate performance. Compared to the clinical risk model, the Spiegelhalter-z statistics decreased from 11.427 to a range between 0.099 and 0.154, implying improved calibration after adding either general population based PRS or childhood cancer survivor based PRS in the models. The SBrS improved slightly with the increase in calibration, ranging from 0.236 to 0.27. The adding of PRS could identify 10% more cases in the high-risk strata (\>50%). The performance of the RT\*PRS models showed similar patterns with the PRS main effect models, with overestimated actual risk for participants in the high-risk groups and underestimated actual risk for participants in the low-risk groups.  Overall speaking, The CRS\*PRS models overestimated the POI risk. The PRS main effects were not statistically significantly associated with POI.  However, the interactions between ovarian radiation therapy and PRS were observed. 
+
+Conclusions
+
+Risk prediction of POI could provide quantitative evidence in the discussion of fertility preservation for childhood cancer survivors. By incorporating  the genetic information in the predictive model, it could improve the calibration. In summary, the gPRS main effect model and RT\*ctPRS interaction models had similar performance and were the best models of all. The generalizability of the models should be assessed in external validation using external data in the future.
+
+## Introduction
+
+Childhood cancer survivors who received life saving but toxic cancer treatments are at an increased risk of developing chronic conditions known as adverse effects later in life[ref]. Primary Ovarian Insufficiency (POI)  is one of these late effects impacting life quality and well-being of female childhood cancer survivors. POI is defined as the natural cessation of menstruation before the age of 40, occurring in about 1% of female individuals in the general population. However, the prevalence reported in the CCSS female childhood cancer survivors reached 10%. 
+
+Early identification of individuals at high risk of developing POI can facilitate appropriate interventions such as counseling or fertility preservation before they develop POI. Obtaining an accurate risk estimate of POI is especially important as fertility preservation is invasive, thus misclassification of low risk individuals to high risk category could cause unnecessary procedure and  suffering . Vice versa, misclassifying a high-risk individual may prevent them from having a biological child. 
+
+Treatment-related risk factors have been well-studied and applied to build risk prediction models, which estimate the probability of developing POI after a cancer diagnosis. Zhe [ref] has built and validated a clinical risk prediction model for identifying POI using demographic information and clinical records including age at diagnosis, race, bone marrow transplant (Yes/No), total body irritation dose, abdomen radiation dose, minimal ovary radiation dose, and 21 chemotherapy agents, etc.  A complete list of the variables is provided in the Appendix. The study has dealt with several challenges. The inverse-probability-of-censoring weighting (IPCW) method was employed to account for the censoring. The competing risk was also considered in the IPCW method. The missing values were imputed using multiple imputations. The model had an AUC of \#\# and AP of \#\#(updated models), indicating good model performance.  
+
+Over the past two decades, studies have identified common genetic variants associated with menopause-related phenotypes using genome-wide association studies (GWAS). A meta-analysis of GWAS conducted in general population samples identified 54 single nucleotide polymorphisms (SNPs) at 44 genetic loci associated with age at menopause. Among survivors, Brooke et al. identified a novel haplotype associated with premature menopause risk among female childhood cancer survivors, suggesting differences between the genetic architectures for premature menopause risk in survivors exist.
+
+While common genetic variants contribute only a small amount to disease risk when considered individually, combined together in the form of a polygenic risk score may improve the prediction model in its ability to stratify those at high risk for developing POI. In recent years, the utilization of PRS in risk stratification for several diseases has been demonstrated in studies [REF]. With PRS, researchers were able to identify 8.0, 6.1, 3.5, 3.2, and 1.5 percent of the population as having a threefold elevated risk of coronary artery disease, atrial fibrillation, type 2 diabetes, inflammatory bowel disease, and breast cancer, respectively.
+
+While the prediction models for POI using treatment exposures as predictors have been established. Little is known regarding the added value of menopause-related polygenic risk score (PRS) and the PRS-treatment interaction on top of pre-existing clinical prediction models. Therefore, using the CCSS original cohort, the aim is to evaluate the potential incremental value of the PRS constructed from the GWAS summary statistics from general population and childhood cancer survivors in improving risk prediction for POI, after accounting for clinical risks. The potential PRS-treatment interactions will also be examined.
+
+## Methods 
+
+_Study Population_
+
+The Childhood Cancer Survivor Study (CCSS) original cohort, with over 10,000 survivors across North America, was the data source for this study. The CCSS original cohort recruited five-year childhood cancer survivors who were diagnosed under age 21 and treated for leukemia, central nervous system (CNS) malignancy, Hodgkin lymphoma, non-Hodgkin lymphoma, neuroblastoma, soft tissue sarcoma, kidney cancer, or bone cancer between 1970 and 1986.
+
+Eligibility criteria for the POI prediction study have been given in a previous study. Briefly, female survivors who had treatment exposure data were at least 18 years old at their last follow-up and who provided menstrual history information, including age at menarche, current menstrual status, age at last menstrual period, and etiology of menopause (surgical or non-surgical) if applicable, were eligible. Further exclusion criteria were applied in this study. Participants whose Genome-wide Association Study (GWAS) data is unavailable and who were not of European descent were excluded. Individuals who overlapped with the St Jude Lifetime Cohort Study (SJLIFE) were also excluded to avoid potential inflation in estimating the association.
+
+The ovarian status outcome are three possible categories: normal, POI, and competing risk event surgical premature menopause (SPM, had bilateral oophorectomy) as individuals who developed SPM cannot subsequently develop POI. The follow-up 1,4, and 5 questionnaires contain questions about menstrual history information including age at menarche, current menstrual status, age at last menstrual period were used to determine the age at event, and ovarian status of individuals. Individuals with missing age at event information were further assigned ages in discussion with the clinician, the assignment algorithm is provided in the Appendix.
+
+_Statistical Analysis_
+
+Two components were included to estimate the risk of POI: clinical and genetic components. Instead of estimating the association between each clinical risk factor and the outcome, the clinical component was represented by a combination of regression coefficients and clinical risk factors from the existing clinical model for POI risk developed in the previous study. The clinical risk score for each individual was adjusted by the calibration slope which is obtained from remodeling the relationship between the clinical risk score and the outcome of interest on new data, referred as adjusted CRS hereafter. The polygenic risk scores (PRSs) constructed in Chapter 2 were used to account for the genetic risk. The time-specific logistic regression was applied to estimate the POI risk. The covariates included in the model were the adjusted clinical risk score, the first five PCs were included in the model to account for ancestry. The adjusted clinical risk score was set as an offset term to represent the known contribution from non-genetic risk factors. The main effect of PRS and the interaction effect between PRS and radiation therapy(Yes/No)/clinical risk score were examined. The conceptual models were written as: 
+
+Main effect model:          POI = PRS+ offset(adjusted CRS)+first five PCs
+
+The interaction models:  POI = PRS\*adjusted CRS + offset(adjusted CRS)+first five PCs
+
+                POI = PRS\*Radiation + offset(adjusted CRS) + first five PCs
+
+PRSs calculated from both the general population and childhood cancer survivors GWAS were examined in separate models. 
+
+A five-fold cross-validation framework was used for the internal validation. Model performance was assessed using the following metrics: the area under the receiver operating characteristic curve (AUC) was used to measure the discrimination. The average positive predictive value (AP) was used to measure the predictive accuracy. The  Spiegelhalter-z statistic was calculated to examine the calibration. The overall performance was assessed using Scaled Brier Score (sBrS). The confidence intervals for AUC, AP, and SBrS were computed using bootstrapping resampling technique. Calibration curves were generated to visualize the performance by plotting the mean observed proportions with the event of each subgroup to its mean predicted probabilities. Finally, we compared the clinical risk model adjusted by the calibration slope with the above-listed models and examined the incremental value in the prediction of adding PRS. Analysis was performed using R version 4.0.3. 
+
+## Results
+
+_Study Samples_
+
+Of 4432 females in the CCSS original cohort who were eligible for inclusion in the previous study, 1977 individuals missing Genome-wide Association Study (GWAS) data, 250 individuals not of European descent and 220 individuals overlapped with the SJLIFE cohort were excluded. The unweighted study sample consisted of 1985 individuals. After accounting for censoring weights, 2427 participants were used in the analysis, with 276 (11.40%) participants developing POI during the study period. 
+
+_Model Evaluation_
+
+The performance measurements, SBrS, AP, and AUC, plus Spiegelhalter-z statistics of the time-specific logistic regression models were computed. All the metrics were computed on the test sets. And the results were the averaged values over the test sets. Results are presented in Table. 
+
+The clinical model performance was given in the Table as a baseline. The SBrS estimate was 0.236 (95% CI: 0.203-0.267). An AUC estimate of 0.797 (95% CI: 0.778-0.816), which is larger than a noninformative model (where AUC=0.5), indicated adequate discrimination. The AP estimate was considerably higher than the 11.4% event rate, reaching 0.539 (95% CI: 0.502-0.574). The Spiegelhalter-z statistics was 11.427 (95% CI: 9.467-13.387, P-value \<0.05), indicating the calibration could be further improved.
+
+**Table** The Performance of the clinical risk model (baseline model)
+
+
+|                 |  **Clinical Model\***|
+|-----------------|----------------------|
+| Metrics         | Point estimate       |
+| SBrS            | 0.236                |
+| AP              | 0.539                |
+| AUC             | 0.797                |
+| Spiegelhalter-z | 11.427               |
+
+
+
+The metrics were calculated based on the adjusted risk using calibration slope; the metrics were accounted for IPCW weights
+
+For the PRS main effect models, values of all the metrics were similar across different types of PRSs (i.e., gPRS, cPRS, or ctPRS). AUC ranged from 0.775 to 0.780. AP values showed a similar pattern, ranging from 0.530 to 0.532. The AUC and AP estimates were close to that of the clinical model mentioned above. The Spiegelhalter-z statistics ranged from 0.099 to 0.154 indicating the models were well-calibrated. Compared to the clinical risk model, the Spiegelhalter-z statistics decreased from 11.427 to a range between 0.099 and 0.154 implying improved calibration after adding either gPRS, cPRS or ctPRS in the model. The SBrS improved slightly with the increase in calibration, ranging from 0.236 to 0.27.
+
+The SBrS, AP, and AUC were similar for these three different CRS\*PRS models, and the values were also close to that of the clinical risk model. The AP  and AUC estimates ranged from 0.528 to 0.537, and 0.792 to 0.799, respectively. The SBrS values ranged from 0.227 to 0.257. The Spiegelhalter-z statistics, ranging from 3.774 to 6.686,  showed decreased patterns compared to the clinical model. The results were not statistically significant, though. 
+
+The AP estimates for the RT\*PRS models ranged from 0.528 to 0.537, which remained similar to the clinical model's AP value. The AUC estimates were slightly lower than that of the clinical model, ranging from 0.775 to 0.780. The Spiegelhalter-z statistics ranged from 1.401 to 1.485, similar to the main effect models and significantly smaller than the clinical and CRS\*PRS models. 
+
+**Table** Summary of model performance 
+
+|                            | **gPRS**             | **cPRS**              | **ctPRS\***           |
+|----------------------------|----------------------|-----------------------|-----------------------|
+| Main Effect Model          |                      |                       |                       |
+| SBrS                       | 0.277 (0.242, 0.311) | 0.274 (0.240, 0.308)  | 0.276 (0.242, 0.310)  |
+| AP                         | 0.532 (0.495, 0.569) | 0.530 (0.494, 0.568)  | 0.531 (0.495, 0.569)  |
+| AUC                        | 0.780 (0.756, 0.804) | 0.775 (0.748, 0.801)  | 0.776 (0.749, 0.801)  |
+| Spiegelhalter-z            | 0.134 (-1.826,2.094) | 0.154 (-1.806, 2.114) | 0.099 (-1.861, 2.059) |
+| CRS\*PRS Interaction Model |                      |                       |                       |
+| SBrS                       | 0.227 (0.180, 0.274) | 0.239 (0.193, 0.284)  | 0.257 (0.214, 0.299)  |
+| AP                         | 0.537 (0.496, 0.578) | 0.534 (0.494, 0.575)  | 0.528 (0.486, 0.572)  |
+| AUC                        | 0.799 (0.780, 0.818) | 0.795 (0.776, 0.816)  | 0.792 (0.773, 0.813)  |
+| Spiegelhalter-z            | 6.686 (4.726, 8.646) | 5.781 (3.821, 7.741)  | 3.774 (1.814, 5.734)  |
+| RT\*PRS Interaction Model  |                      |                       |                       |
+| SBrS                       | 0.267 (0.229, 0.304) | 0.268 (0.230, 0.305)  | 0.269 (0.231, 0.306)  |
+| AP                         | 0.520 (0.481, 0.557) | 0.520 (0.481, 0.557)  | 0.519 (0.478, 0.560)  |
+| AUC                        | 0.752 (0.731, 0.774) | 0.752 (0.731, 0.774)  | 0.755 (0.732, 0.779)  |
+| Spiegelhalter-z            | 1.485 (-0.475,3.445) | 1.401 (-0.559, 3.361) | 1.142 (-0.818, 3.102) |
+
+Values are averaged over 25 test sets. gPRS represents general population-based PRS, cPRS is the cancer survivor PRS, ctPRS is the clumping and thresholding PRS, Clinical represents the clinical risk model, CRS represents the clinical risk score derived in Zhe's study. AUC is the area under the receiver operating characteristic curve, AP is the time-specific average positive predictive value. BSS is the Brier Scaled Score. Among all candidate ctPRSs constructed in Chapter 2, ctPRS with clumping = 0.4 and thresholding = 5e-5 was selected based on the averaged model performance. Detailed methodology and selection procedures were given in the appendix.
+
+_The Calibration Curve_
+
+The calibration of the models was assessed using Spiegelhalter-z statistics as aforementioned. Furthermore, calibration curves were plotted to visualize the results. The following plot showed the calibration curves for the main effect models. The x-axis is the predicted probabilities of developing POI, and the y-axis is the observed proportions of POI in each subgroup. 
+
+The clinical model underestimated the POI risk, illustrated by the red line away from the diagonal dashed line. The gPRS, cPRS and ctPRS models performed similarly, with calibration curves close to the diagonal line. The PRS main effect models performed well for participants in medium risks, however overestimated the actual risk for participants in high risk and underestimated the actual risk for low-risk groups. The gPRS main effect model performed best in low-risk groups compared to the remaining models.
+
+![](https://lh3.googleusercontent.com/kI_3F0S6SnVC8uXFMuGXSx4K7DhCG3NAEJHc3Ujmy4FDSx0HjgO78wcU5SNX-798Iohr7pTjuU1EUuNVpr-Hhg_EH6A5TDkr1leIfix_0NJ-_nB6cdQGCQ3l92geywTOK3UkTYeU=s0)
+
+As the following graphs showed, the CRS\*PRS interaction models performed well initially. However, the calibration curves away from the diagonal line with the increase of the actual risk in participants, indicating overestimating of the actual risks. The CRS\*ctPRS model performed best, followed by the CRS\*cPRS model, and finally is the CRS\*gPRS model. The calibration curves of RT\*PRS models showed similar patterns with the PRS main effect model, with overestimated actual risk for participants in the high-risk groups and underestimated actual risk for participants in the low-risk groups.
+
+
+![](https://lh3.googleusercontent.com/IrOWx-O3JQiJ2G5_Xsmxsx3XUCG9SIstw6KK41jLaBVQ8KUbmgCO9GUMwCzW7FHnXJbOiOII03Oep5h_MVBRoI-XZHQqoMvCX2JWm4eWoBsxz7oYKaSZ5sxbGxEGpdIePb5s7GhO=s0)
+
+![](https://lh5.googleusercontent.com/tmchhOPiMDWlOoNvTcOSs2XcEXExTGdc-lK5fI8bQACWJNZfGH9pijINZkCVh4N64urIYLYwIcGhTeesNQuIQCvmO1LBu25odhFp1C1C8Vkn8KZYHxJqV8ur0Hp0hgjsKJnMs3lw=s0)
+
+_Risk Stratification_
+
+Using 5%, 20%, and 50% as cutoffs,  the predicted probabilities of developing POI were further stratified into four categories, that is, \<5%, 5% to \<20%, 20% to \<50%, and ≥50%, corresponding to low, medium-low, medium, and high-risk groups, respectively. The risk groups predicted by the models were shown in the tables below.
+
+The risk stratification of the clinical model showed that 75 participants had predicted risk larger than 50%, 83% among whom developed POI. However,  22.4% of participants who actually developed POI were predicted as medium low risk, indicating that a large proportion of participants in this subgroup were misclassified. Among 69 participants who were classified into the medium-risk subgroup, 44( accounting for 63%) participants were diagnosed with POI. 
+
+**Table** risk stratification of the clinical model
+
+
++----------+----------+
+|          | Clinical |
++==========+==========+
+| Risk     | event    |
+|          |          |
+| category |          |
++----------+----------+
+| \<5%     | 101.549  |
++----------+----------+
+| 5%-20%   | 67.916   |
++----------+----------+
+| 20%-50%  | 43.485   |
++----------+----------+
+| \>50%    | 62.795   |
++----------+----------+
+
+The following table showed the risk stratification of the main effect models in the high-risk subgroup generated comparable results as that of the clinical risk model. The gPRS main effect model performed best among PRS main effect models, with 107 cancer survivors having predicted risk probabilities larger than 0.5, among whom 82.6% participants actually developed POI. The risk prediction for the medium low-risk group in the PRS main effect models improved compared to the clinical risk model. As shown before, among those 303 participants classified into the medium low-risk subgroup by the clinical model, 22.4% were misclassified. The gPRS main effect model results showed that 1450 cancer survivors were classified to the medium low-risk subgroup, among whom 93.03% did not develop POI (93.03% ≈ (1450-101.046)/1450). The misclassification rate reduced from 22.4% to 7%. The misclassification rates among the medium low-risk subgroup were even lower in the cPRS and ctPRS main effect models (6.5% and 6.6%, respectively). Among participants who were predicted as medium risk of developing POI in gPRS, cPRS, and ctPRS main effect models,  30.7%, 28.6%, and 29% of them developed POI, respectively.
+
+**Table** Risk stratification of the PRS main effect model
+
++----------+------------+----------+-----------+
+| Risk     | **gPRS**   | **cPRS** | **ctPRS** |
+|          |            |          |           |
+| category |            |          |           |
++==========+============+==========+===========+
+| event    | prediction | \% event | event     |
++----------+------------+----------+-----------+
+| \<5%     | 28.887     | 682.261  | **0.042** |
++----------+------------+----------+-----------+
+| 5%-20%   | 101.046    | 1450     | **0.070** |
++----------+------------+----------+-----------+
+| 20%-50%  | 57.539     | 187.605  | **0.307** |
++----------+------------+----------+-----------+
+| \>50%    | 88.273     | 106.913  | **0.826** |
++----------+------------+----------+-----------+
+
+One of the Edinburgh Selection Criteria for oocyte cryopreservation stated that patients with high risk (over 50%) of developing POI were suggested for ovarian tissue cryopreservation. Thus, 0.5 was used as a cutoff to compare the model performance further. Using .5 as the cutoff, the confusion matrices for clinical and gPRS main effect models can be summarized as below. Some measurements were given in the following table: We see that most of the metrics were similar between clinical and gPRS models. However, with similar false-positive rates (16.32% and 17.43%),  the sensitivity of the gPRS model improved from 22.8% in the clinical model to 32.01%. The confusion matrices showed that the gPRS main effect model could identify 25 (25 ≈ 88.273 - 62.795) more POI cases than the clinical model.
+
+**Table**  confusion matrix for clinical risk model 
+
+
+
+|                    | actual positive | actual negative | row total |
+|--------------------|-----------------|-----------------|-----------|
+| predicted positive | 62.795          | 12.247          | 75.042    |
+| predicted negative | 212.95          | 2138.787        | 2351.737  |
+| column total       | 275.745         | 2151.034        | 2426.779  |
+
+
+**Table** Confusion matrix for gPRS model
+
+
+
+|                    | actual positive | actual negative | row total |
+|--------------------|-----------------|-----------------|-----------|
+| predicted positive | 88.273          | 18.64           | 106.913   |
+| predicted negative | 187.472         | 2132.394        | 2319.866  |
+| column total       | 275.745         | 2151.034        | 2426.779  |
+
+
+**Table** Some measurements of the clinical model and gPRS main effect model
+
+|             | Clinical Model | gPRS Model |
+|-------------|----------------|------------|
+| Sensitivity | 0.228          | 0.320      |
+| Specificity | 0.994          | 0.991      |
+| PPV         | 0.837          | 0.826      |
+| NPV         | 0.909          | 0.919      |
+| FPR         | 0.163          | 0.174      |
+| FNR         | 0.091          | 0.081      |
+
+
+PPV is positive predictive value; NPV is the negative predictive value; FPR is the false positive rate; FNR is the false negative rate
+
+The risk stratification results were also summarized for the CRS\*PRS and RT\*PRS interaction effect models. The CRS\*PRS interaction models overestimated the POI risk, leading to a higher false-positive rate than the PRS main effect models. The CRS\*ctPRS model performed best over the CRS\*PRS interaction models. However, 41 participants were misclassified, the false positive rate reached 27.5% (27.5% ≈ 41.188/149.688). For the RT\*PRS models, the RT\*ctPRS still performed better than RT\*gPRS and RT\*cPRS, with 114 participants predicted with a POI risk larger than .5,  91 (accounting for 79.5%) developed POI. The results of RT\*ctPRS model were comparable to the gPRS main effect model.
+
+
+**Table**  Risk stratification of the CRS\*PRS model
+
++----------+---------------+---------------+----------------+
+| Risk     | **CRS\*gPRS** | **CRS\*cPRS** | **CRS\*ctPRS** |
+|          |               |               |                |
+| category |               |               |                |
++==========+===============+===============+================+
+| event    | prediction    | \% event      | event          |
++----------+---------------+---------------+----------------+
+| \<5%     | 64.766        | 1507.046      | 0.043          |
++----------+---------------+---------------+----------------+
+| 5%-20%   | 43.505        | 530.737       | 0.082          |
++----------+---------------+---------------+----------------+
+| 20%-50%  | 47.343        | 206.073       | 0.230          |
++----------+---------------+---------------+----------------+
+| \>50%    | 120.131       | 182.924       | 0.657          |
++----------+---------------+---------------+----------------+
+
+
+**Table**  Risk stratification of the RT\*PRS model
+
+
++----------+--------------+--------------+---------------+
+| Risk     | **RT\*gPRS** | **RT\*cPRS** | **RT\*ctPRS** |
+|          |              |              |               |
+| category |              |              |               |
++==========+==============+==============+===============+
+| event    | prediction   | \% event     | event         |
++----------+--------------+--------------+---------------+
+| \<5%     | 36.438       | 898.47       | 0.041         |
++----------+--------------+--------------+---------------+
+| 5%-20%   | 94.885       | 1243.145     | 0.076         |
++----------+--------------+--------------+---------------+
+| 20%-50%  | 51.001       | 162.407      | 0.314         |
++----------+--------------+--------------+---------------+
+| \>50%    | 93.421       | 122.757      | 0.761         |
++----------+--------------+--------------+---------------+
+
+The Coefficients and Significance
+
+In addition to the predictive power, the significance of the genetic component was also of interest. The following table and box plots summarized the coefficients and significance of the models over 25 training data sets. 
+
+**Table** summary of coefficients over 25 training data sets
+
+![](https://lh4.googleusercontent.com/pwHwlGdfW-_YYEU7lVM2qcTtj4YV9pcof745tG9zARPvFMSorLX0CAPvQVbyIIEWo6iljtWqHJepDx5BYVlFPW3wvOgsGCyxJznP4jRS-oe4C2Q7Mkb8UvmTU6YOD9vOVqR7JC9d=s0)
+
+**Table** Significance of the PRS main effect models
+
+![](https://lh5.googleusercontent.com/uaNj1KvdMsmdSH1kL8Tur5KgtJNP62ERy_xjCZYW1_nomD9tFC_YA6LYtEv_eRGIqVD7CaKEviAONcpUr4QdEEIJOGu2Pryd2rEr0sRoo_selOwu7MRfKKlKdrZDuGtsW9SawOcs=s0)
+
+The significance of CRS\*PRS and RT\*PRS interaction effect was not given in the aboved table; instead, the box plots were provided in the following box plots.
+
+The coefficients and significance of the main effect models 
+
+![](https://lh6.googleusercontent.com/lgZn9HBj5neatb3HDgt-QoWpFyXTz9r1EGo5OuMocZ15m5wqtsUnk6zM5AlDXKsf4bP0-ME_VW7J05TzmiA9wkxTbCw6seZcV6ZTbtQfNEv4S0eTO2xGBrYx6te5u1u4FY5QNGDl=s0)![](https://lh6.googleusercontent.com/yuR9ZNvkZkZelgTdTZ5sYzD1LVC_ASG7qXBdPRIn76OltfVfsCsaNWXjXpMRtiUKIaXLtgq1r9o5ugL8mNgo26sg496-Ygon_NkCFeyx6SN9da3oFxMCGP9MQl11P5N0Ds8RjU40=s0)
+
+The coefficients and significance of the CRS\*PRS interaction models 
+
+![](https://lh3.googleusercontent.com/u0yozjdVSmR14ITIr7fWEzSjPc857jqZvOgGaTWKyNCcOvkmPCfFb7qrdhVMQISmmrFTgRKu974GG9pobXbvnoT21vKmOX_RWnjfSlfxesSzlX4-dB0lbKF1AMnbyXFPDcu9C4kx=s0)![](https://lh4.googleusercontent.com/BceLwk1LkPwYchhKHBvCnveduGxmj7lt0BTACdTKmQ4tLCT8_Cqh8z3Xg04641iRKyOUm65ecW2tVtwIDreZx3_21ozutVcjSOa_FS8KpM1JDxB9Td8bRwyUg2Ql1_Et1_oN17nV=s0)
+
+The coefficients and significance of the RT\*PRS interaction models 
+
+![](https://lh4.googleusercontent.com/_SySvholjjUxXD-64IhtQ7hEgc8npF_-rGBa0vNlePpQNYR41mgLXWNnBCdaV8SJ9-c2omn_fSSphto3C_FZCIvtYFC258SjHxzALBXoe_Aqbyvj3w5rtgBSOyHkLA0_SkCKFSOu=s0)![](https://lh4.googleusercontent.com/5Zi_FwW5y-cx4170iAI66cac-46NeEOIPcig9RKHJdwfLLm76nvt9EI96JXP2Y-n2EwRRxVQFPUj9g-2w18H0A6WrvhNvMLcBY3tGvgIa3uS59l7p-8DQbeOCtb6uaCZTGY6utR5=s0)
+
+The first part of the table and the box plots suggested that none of the PRSs in the main effect models was statistically significantly associated with POI after accounting for adjusted CRS and the first five PCs. (P-value ranged from 0.254 to 0.753). The table also showed a statistically significant association between the RT\*PRS interaction and developing POI. On average, in the presence of radiation therapy, a one-unit increase in the PRS  will lead to a 6.488 times increase in the odds of developing POI(OR\*=6.488, P-value \<0.005). However, if a patient did not receive any radiation, the PRS will not affect the risk of developing POI. The RT\*cPRS and RT\*ctPRS model showed that the odds of developing POI among patients who received any radiation therapy would increase by 13.542% and 56.831%, with one unit increase in cPRS and ctPRS, respectively. And the association were also statistically significant. (17 out of 25 P-values were less than 0.05 for the RT\*ctPRS model; all P-values were less than 0.05 for the RT\*cPRS model)
+
+## Discussion
+
+This research investigated the added value of genetics in prediction models for POI by including genetic variants in the form of PRS. PRS generated from either the general population or cancer survivors were included in the time-specific logistic regression model. Both the main effect and interaction effect between PRS and treatments were examined. 
+
+The performance, from PRS main effect model to the CRS\*PRS and RT\*PRS interaction models implied that after accounting for clinical risk factors, the inclusion of genetic data in the form of PRS could improve the overall performance of the predictive model for POI. Three different PRSs computed from GWAS conducted either in the general population or childhood cancer survivors studies performed similarly. The predictive accuracy, which was captured by AP values, was similar across all models. The AUC values were also similar, with those in the CRS\*PRS models are slightly lower than those in the other models. The Spiegelhalter-z statistics suggested that the addition of genetics improved the calibration. 
+
+One implication from this study is that the general population based PRS which included 69 genetic variants showed predictive power for POI in the childhood cancer survivor population. The calibration improved by having the gPRS as the main effect in the model, though the main effect of gPRS was not statistically significant in the model. The gPRS main effect model classified 9.20% POI cases into high-risk strata (\>50%) compared with the clinical risk model. 
+
+The study did not see an association between POI and the cPRS calculated from 6 independent genetic variants reported GWAS for POI in the childhood cancer survivor. In the previous GWAS study, though none of the genetic variants showed a statistically significant association with POI, the researchers suggested that the presence of a haplotype among patients exposed to ovarian RT may be at high risk of developing POI. The cPRS\*RT and ctPRS\*RT interaction effects were found in this study, which further confirmed the conclusion in the previous study. However, the genetic variants included in the haplotype, cPRS, and ctPRS barely overlap. 
+
+The genetic information (i.e., genetic summary statistics) and clinical risk were obtained from the existing studies. The sample size of the GWAS for POI in childhood cancer survivors was limited, which may have resulted in the PRS not being representative of the genetic profile of POI. The GWAS study included only 799 cancer survivors with 30 (3.8%) cases. The limited sample size and the small number of cases might lead to problematic effect estimates for the genetic variants. Thus the observed association should be interpreted with caution.  And further larger studies should be conducted to further validated the PRS. The calibration slope was used to adjust for the clinical score to get a more genuine estimate of the clinical risk.
+
+Another limitation was that half of the participants were censored in this study. The censoring weights were applied to the participants with observed outcomes to account for the censoring. For the application of the censoring weights, however, the assumptions of missing at random and independence between the event and censoring process should be met. The censoring weights may not be valid if the assumptions are not met.
+
+In conclusion, after controlling for clinical risk factors, the PRS-based genetic profile has some prediction potential for POI in childhood cancer survivors. In comparison to the clinical model, including general population-based PRS in the predictive model enhanced the calibration of the prediction models. The interactions between PRS and ovarian RT were observed. External validation will be required in the future to confirm the findings. Ultimately, the predicted risk could be used for risk classification and as a quantitative reference for clinicians and patients when making fertility preservation decisions.
+
+
+## Reference 
+
+**Table** data dictionary of the clinical model
+
+
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+|                  | Variable names     | Type (units)                                                                                                                                                                                                  | Description                                             |
+|                  |                    |                                                                                                                                                                                                               |                                                         |
+|                  |                    |                                                                                                                                                                                                               |                                                         |
++==================+====================+===============================================================================================================================================================================================================+=========================================================+
+| outcome          | status             | categorical/factor                                                                                                                                                                                            | ovarian status factor (4 levels): Normal, AOF, PM, SPM  |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| a_event          | numeric (years)    | age at event                                                                                                                                                                                                  |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| demographics     | age_dx             | numeric (years)                                                                                                                                                                                               | age at diagnosis                                        |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| diagnose         | categorical/factor | cancer diagnose type (8 levels):                                                                                                                                                                              |                                                         |
+|                  |                    |                                                                                                                                                                                                               |                                                         |
+|                  |                    | Leukemia, CNS, HD, HNL, Kidney (Wilms), Neuroblastoma, Soft tissue sarcoma, Bone cancer                                                                                                                       |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| race             | categorical/factor | race (3 levels): White, Black, Other                                                                                                                                                                          |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| BMT              | bmt                | categorical/factor                                                                                                                                                                                            | received BMT within 5 years from first cancer diagnosis |
+|                  |                    |                                                                                                                                                                                                               |                                                         |
+|                  |                    |                                                                                                                                                                                                               | factor (2 levels): No Yes                               |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| radiotherapy     | tbidose            | numeric (cGy)                                                                                                                                                                                                 | cumulative radiation doses to total body within 5 years |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| minovary         | numeric (cGy)      | Minimum cumulative ovarian radiation dose within 5 years. The average radiation doses to right and left ovaries were estimated separately, and the lower dose was recorded as minimum ovarian radiation dose. |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| pitdose          | numeric (cGy)      | cumulative radiation doses to pituitary within 5 years                                                                                                                                                        |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| Chemo therapy    | bcnu               | numeric (mg/m2)                                                                                                                                                                                               | cumulative dose of BCNU within 5 years                  |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| busulfan         | numeric (mg/m2)    | cumulative dose of busulfan within 5 years                                                                                                                                                                    |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| ccnu             | numeric (mg/m2)    | cumulative dose of CCNU within 5 years                                                                                                                                                                        |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| chlorambucil     | numeric (mg/m2)    | cumulative dose of chlorambucil within 5 years                                                                                                                                                                |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| cyclophosphamide | numeric (mg/m2)    | cumulative dose of cyclophosphamide within 5 years                                                                                                                                                            |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| ifosfamide       | numeric (mg/m2)    | cumulative dose of ifosfamide within 5 years                                                                                                                                                                  |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| melphalan        | numeric (mg/m2)    | cumulative dose of melphalan within 5 years                                                                                                                                                                   |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| nitrogen_mustard | numeric (mg/m2)    | cumulative dose of nitrogen_mustard within 5 years                                                                                                                                                            |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| procarbazine     | numeric (mg/m2)    | cumulative dose of procarbazine within 5 years                                                                                                                                                                |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| thiotepa         | numeric (mg/m2)    | cumulative dose of thiotepa within 5 years                                                                                                                                                                    |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| carboplatin      | numeric (mg/m2)    | cumulative dose of carboplatin within 5 years                                                                                                                                                                 |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| cis_platinum     | numeric (mg/m2)    | cumulative dose of cis_platinum within 5 years                                                                                                                                                                |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| bleomycin        | numeric (mg/m2)    | cumulative dose of bleomycin within 5 years                                                                                                                                                                   |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| daunorubicin     | numeric (mg/m2)    | cumulative dose of daunorubicin within 5 years                                                                                                                                                                |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| doxorubicin      | numeric (mg/m2)    | cumulative dose of doxorubicin within 5 years                                                                                                                                                                 |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| idarubicin       | numeric (mg/m2)    | cumulative dose of idarubicin within 5 years                                                                                                                                                                  |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| methotrexate     | numeric (mg/m2)    | cumulative dose of methotrexate within 5 years                                                                                                                                                                |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| mitoxantrone     | numeric (mg/m2)    | cumulative dose of mitoxantrone within 5 years                                                                                                                                                                |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| vm_26            | numeric (mg/m2)    | cumulative dose of VM 26 within 5 years                                                                                                                                                                       |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
+| vp_16            | numeric (mg/m2)    | cumulative dose of VP 16 within 5 years                                                                                                                                                                       |                                                         |
++------------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------+
 
