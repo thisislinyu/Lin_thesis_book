@@ -1,0 +1,49 @@
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+
+
+
+body {
+  background-color: lightblue;
+}
+
+h1 {
+  font-family: 	Times;
+  font-size: 24pt;
+}
+
+h1 {
+  font-family: 	Times;
+  font-size: 24pt;
+}
+
+h2 {
+  font-family: 	Times;
+  font-size: 23pt;
+  font-style: italic;
+}
+
+h3 {
+  font-style: italic;
+  font-size: 22px;
+  font-family: 	Times;
+}
+
+p {
+  font-family: 	Times;
+  font-size: 22px;
+  line-height: 2;
+  
+}

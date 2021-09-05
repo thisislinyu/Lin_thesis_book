@@ -1,0 +1,26 @@
+--- 
+title: "Risk Prediction of Primary Ovarian Insufficiency in Childhood Cancer Survivors"
+author: "Lin Yu"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib, references.bib]
+#biblio-style: apalike 
+csl: the-lancet.csl
+link-citations: yes
+description: " "
+---
+
+# Introduction {-}
+
+Childhood cancer survivors are a rapidly growing group in developed countries due to the advancement in cancer treatments[@lund2011]. In the late 1980s, 71% of children diagnosed with cancer will survive at least five years after their initial cancer diagnosis. With the improvement in cancer treatment, the five-year survival rate is over 82% in Canada. This is a significant improvement, and consequently, the size of the childhood cancer survivor population has grown dramatically, to  300,000 individuals in Canada.  However, the remarkable increases in survival have been accompanied with adverse effects later in life known as late effects. Approximately two-thirds of childhood cancer survivors experience late effects, which may include cardiopulmonary, endocrine, renal or hepatic dysfunction, reproductive difficulties, neurocognitive impairment, psychosocial difficulties and the development of subsequent cancers.
+
+One of the late effects for female cancer survivors is primary ovarian insufficiency (POI), characterized by permanent natural cessation of menstruation before 40 years old.  POI can occur early, during, or immediately following the completion of cancer treatment or, more commonly, in the years that follow the completion of cancer treatments but prior to age 40. In the general population, the prevalence of POI is approximately 1%  whereas a study reported that 10.9% (100 out of 921) of childhood cancer survivors developed POI. Additionally, another study reported a 13-fold (95% CI = 3.26 to 53.51; P<.001) increased risk in developing POI after five years of cancer diagnosis compared to their healthy siblings.
+
+The negative impacts of POI, including infertility, an increased risk of chronic disease, and a reduction in overall life quality, have prompted researchers to identify individuals at high risk of developing POI. Treatment-related risk factors, such as radiation therapy and chemotherapy, have been studied and incorporated into a predictive model for POI in female survivors of childhood cancer. In recent decades, Genome-wide association studies (GWAS) have identified low-risk variants related to menopause-related phenotypes. However, little is known regarding variations' potential to identify POI at different risk levels, and the effect of gene-treatment interactions on POI. Therefore, this study aims to develop prediction models using genetic information from GWAS studies in combination with clinical risk factors, and investigate potential gene-treatment interactions.
+
+The purpose of the predictive models is to identify individuals who are at high risk of POI. Thus timely and appropriate interventions can be taken. For individuals at high risk of developing POI, patients can be counseled before or shortly after the cancer treatment regarding the risk and the need for fertility preservation such as oocyte and ovarian tissue cryopreservation[ref]. If the risk of developing POI is low,  clinicians can provide consoles to patients and their families and avoid  suffering and cost to undergo interventions for fertility preservation. By providing quantitative evidence for potential POI risk among cancer survivors, the ultimate goal is to improve the survivorship of female cancer survivors and to ensure that appropriate interventions are taken to improve the well being of female cancer survivors.
+
+This thesis is structured as follows. The remainder of Chapter 1 reviews the literature on primary ovarian insufficiency, previous related work and genetics for POI, describes the statistical methods used in model development and evaluation, followed by an introduction to the data. Chapter 2 presents the construction of polygenic risk scores. Chapter 3 highlights the model development and evaluation. Finally, Chapter 4 summarizes the findings, discusses study limitations, and provides recommendations for future research. 
+
+

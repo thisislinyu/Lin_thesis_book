@@ -1,0 +1,8 @@
+Lit
+background01
+methodology-review
+polygenic-risk-score
+polygenic-risk-score-construction
+risk-prediction-for-primary-ovarian-insufficiency-in-childhood-cancer-survivors
+conclusion
+final-words
